@@ -6,7 +6,7 @@ const path = require('path');
 const DEBTID = "ec10a63a4067dff85a8ba9256dd0c9a86f25f9a4191b7411a54f5c2fdfd19221";
 const bchCollateralAddress = 'bchtest:qp4wds5xz0vlpga28u90cn8mnrhw2w8ljgh2q8asxr'; // address holding the BCH as collateral
 const decodeTx = 'OP_RETURN 653 959632fd0e674a4158d17167b0963f586ec19ffcea204e030d1c1f6541c3348f'
-const smartContractMnemonic = 'swim day tool hobby patrol omit wall age jungle lottery federal brother';
+const smartContractMnemonic = '';
 var totalBCHLoan = 0.5; // total BCH for distribution in this airdrop
 const network = 'testnet';
 // =============================================================
