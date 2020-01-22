@@ -36,12 +36,10 @@ const P2PKH = Contract.compile(path.join(__dirname, 'Debt_Covenant.cash'), netwo
 // Instantiate a new P2PKH contract with constructor arguments: { pkh: collateralFundPkh }
 const instance = P2PKH.new(collateralFundPkh);
 	
-	
-checkDebtCovenant();
-
 /*
  * Checks whether the Debt Covenant has been breached based on current price 
  */
+checkDebtCovenant();
 async function checkDebtCovenant() {
 
 	// initialise distribution variables
