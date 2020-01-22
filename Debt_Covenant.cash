@@ -1,0 +1,20 @@
+pragma cashscript ^0.3.1;
+
+contract Debt_covenant(bytes20 pkh) {
+
+	// compares the token ID used by the JS to the ID stored onchain via blockpress
+	function validateTokenID(string localTokenId, string onchainTokenId) {
+		
+		require(localTokenId == onchainTokenId);
+		
+	}
+
+	function spend(pubkey pk, sig s) {
+		
+		//verifies signature and pk->pkh
+		require(hash160(pk) == pkh);
+        	require(checkSig(s, pk));
+
+	}
+
+}
