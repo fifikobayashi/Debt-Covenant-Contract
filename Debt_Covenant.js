@@ -1,14 +1,11 @@
-// ============== Initialisation Parameters ====================
-const { Contract, Sig, FailedRequireError } = require('cashscript');
-const path = require('path');
-const DEBTID = "ec10a63a4067dff85a8ba9256dd0c9a86f25f9a4191b7411a54f5c2fdfd19221";
-const bchCollateralAddress = 'bchtest:qp4wds5xz0vlpga28u90cn8mnrhw2w8ljgh2q8asxr'; // address holding the BCH as collateral
-const decodeTx = 'OP_RETURN 653 959632fd0e674a4158d17167b0963f586ec19ffcea204e030d1c1f6541c3348f'
-const smartContractMnemonic = '';
-var totalBCHCollateral = 0.1; // total BCH as collateral for the loan
-const bchUSDThreashold = 130; // if BCH USD price falls below this then it constitutes a breach of debt covenant
-const network = 'testnet';
-// =============================================================
+// ============== Covenant Parameters ====================
+const DEBTID 				= "959632fd0e674a4158d17167b0963f586ec19ffcea204e030d1c1f6541c3348f";
+const bchCollateralAddress 	= 'bchtest:qp4wds5xz0vlpga28u90cn8mnrhw2w8ljgh2q8asxr'; // address holding the BCH as collateral
+const decodeTx 				= 'OP_RETURN 653 6a028d024039353936333266643065363734613431353864313731363762303936336635383665633139666663656132303465303330643163316636353431633333343866';
+const smartContractMnemonic = 'INSERT CONTRACT MNEMONIC'; // the contract holding the BCH collateral
+var totalBCHCollateral 		= 100; // total BCH as collateral for the loan
+const bchUSDThreashold 		= 63; // if BCH USD price falls below this then it constitutes a breach of debt covenant
+const network 				= 'testnet';
 
 // Initialise BITBOX based on chosen network
 const { BITBOX } = require('bitbox-sdk');
@@ -23,12 +20,16 @@ if (network === `mainnet`)
 else SLP = new SLPSDK({ restURL: `https://trest.bitcoin.com/v2/` });
 
 // Initialise CashScript contract based on the chosen network
+const { Contract, Sig, FailedRequireError } = require('cashscript');
+const path = require('path');
 const rootSeed = bitbox.Mnemonic.toSeed(smartContractMnemonic);
 const hdNode = bitbox.HDNode.fromSeed(rootSeed, network);
-const collateralFund = bitbox.HDNode.toKeyPair(bitbox.HDNode.derive(hdNode, 0));
-const collateralFundPk = bitbox.ECPair.toPublicKey(collateralFund); // Derive collateralFund's public key and public key hash
-const collateralFundPkh = bitbox.Crypto.hash160(collateralFundPk);
-const P2PKH = Contract.compile(path.join(__dirname, 'Debt_Covenant.cash'), network); // Compile the P2PKH Cash Contract
+const collateralFundPkh = bitbox.Crypto.hash160(
+	bitbox.ECPair.toPublicKey(
+	bitbox.HDNode.toKeyPair(
+	bitbox.HDNode.derive(hdNode, 0)
+	)));
+const P2PKH = Contract.compile(path.join(__dirname, 'Debt_Covenant.cash'), network); // Compile the Cash Contract
 const instance = P2PKH.new(collateralFundPkh); // Instantiate a new P2PKH contract with constructor arguments: { pkh: collateralFundPkh }
 
 /*
@@ -38,8 +39,7 @@ checkDebtCovenant();
 async function checkDebtCovenant() {
 
 	// initialise distribution variables
-	let totalDividends = await SLP.Utils.tokenState(DEBTID).circulatingSupply;
-	console.log('total dividends: ' + totalDividends);
+	var totalDividends = 100; // i.e. 100% of the debt tokenisation
 	var distributionRate = 0;
 
 	// retrieves and decodes the debt obligation token ID permanently stored onchain via blockpress
@@ -50,8 +50,8 @@ async function checkDebtCovenant() {
 	// Calls the CashScript contract to validate the Debt ID being used
 	var debtIdValidation = await validateTokenId(DEBTID, onchainTokenId);
 	
-	// Calls the CashScript contract to check the BCH price via an Oracle
-	var covenantBreachCheck = await checkBchPrice();
+	// Calls Bitbox to validate whether the convenant is in breach based on BCH price
+	var covenantBreachCheck = await validateBchPrice();
 	
 	// commence debt repayment ONLY if Debt ID matches AND BCH prices falls below threshold
 	if (debtIdValidation == true && covenantBreachCheck == true) { 
@@ -63,10 +63,10 @@ async function checkDebtCovenant() {
 		var debtObHolders = await SLP.Utils.balancesForToken(DEBTID); 
 		const debtObAddrCount = debtObHolders.length;
 
-		// calculate distribution of the repayments token based on debt obligation token balances of each SLP address
+		// calculate distribution repayment to creditors
 		distributionRate = totalBCHCollateral / totalDividends;  
 
-		// passes the array of token holders and release collateral BCH
+		// passes the array of creditors and release collateral BCH as repayment
 		releaseCollateral(debtObHolders, distributionRate, debtObAddrCount);
 
 	} else { // if the token ID did not match the onchain version
@@ -82,15 +82,16 @@ async function checkDebtCovenant() {
 async function validateTokenId(localId, onchainId) {
 
 	try {
-		// Call the validateTokenId function in cashscript returns true if no error is caught
-		// note the '.send()' is needed so that validation is carried out on the network, otherwise
-		//		it is no different than a local client side validation.
+		// Calls the validateTokenId function in cashscript and returns true if require() succeeds
+		// note the '.send()' is needed so the validation is carried out on the network, otherwise
+		//	it is no different than a local client side validation.
 		var tx = await instance.functions.validateTokenID(localId, onchainId).send(instance.address,1);
+		
 		return true;
+		
 	} catch (error) {
-		if (error instanceof FailedRequireError) {
-			// returns false if comparison fails
-			console.log('Error: token ID mismatch');
+		if (error instanceof FailedRequireError) { // returns false if require() comparison fails
+			console.log('Error: token ID mismatch, exiting audit.');
 			return false;
 		} else {
 			console.log('Error: ' + error);
@@ -100,21 +101,23 @@ async function validateTokenId(localId, onchainId) {
 }
 
 /*
- * Calls on the CashScript contract to validate the debt obligation ID being used 
+ * Checks the current BCH USD price via Bitbox
  */
-async function checkBchPrice() {
+async function validateBchPrice() {
 	try {
 		let currentPrice = await bitbox.Price.current('usd');  
-		console.log('current price: ' + currentPrice);
-		
-		if (currentPrice < bchUSDThreashold) {
+		console.log('current price: ' + (currentPrice/60));
+		if (currentPrice < (bchUSDThreashold*60)) {
+			console.log('Debt covenant breached, calculating repayment to creditors');
 			return true; // debt covenant has been breached
 		} else {
-			return false;
+			console.log('Debt covenant still in tact, exiting audit');
+			process.exit(1)
 		}
     } catch(error) {
 		console.error(error);
-		return false;
+		console.log('Exiting audit');
+		process.exit(1)
 	}
 }
 
@@ -129,10 +132,10 @@ async function releaseCollateral(debtObHolders, distributionRate, debtObAddrCoun
     // convert cash addresses into legacy addresses
     const SEND_ADDR_LEGACY = bitbox.Address.toLegacyAddress(bchCollateralAddress);
     
-    // retrieve utxos of address
+    // retrieve utxos of the address holding the BCH collateral
     const u = await bitbox.Address.utxo(bchCollateralAddress);
     const utxo = findBiggestUtxo(u.utxos);
-    const originalAmount = utxo.satoshis; // original total sats in address
+    const originalAmount = utxo.satoshis;
     const vout = utxo.vout;
     const txid = utxo.txid;
     
@@ -140,7 +143,7 @@ async function releaseCollateral(debtObHolders, distributionRate, debtObAddrCoun
     const transactionBuilder = new bitbox.TransactionBuilder(network);
     
     // get byte count to calculate fee. paying 1.2 sat/byte
-    const byteCount = 300 * debtObAddrCount;
+    const byteCount = 300 * debtObAddrCount; // 300 bytes per creditor output
     console.log(`byteCount: ${byteCount}`);
     const satoshisPerByte = 1.2;
     const txFee = Math.floor(satoshisPerByte * byteCount);
@@ -157,7 +160,7 @@ async function releaseCollateral(debtObHolders, distributionRate, debtObAddrCoun
 		var sendAmountSat = Math.floor(bitbox.BitcoinCash.toSatoshi(sendAmountBch)); // convert from BCH to SATs
 		var receiveAddress = SLP.Address.toCashAddress(debtObHolders[i].slpAddress);
 		
-		console.log('\nAdding output #: ' + (i+1) + ' of ' + debtObAddrCount + '\nSending ' 
+		console.log('\nAdding output #: ' + (i+1) + ' of ' + debtObAddrCount + ' creditor(s)\nSending ' 
 		+ sendAmountBch + ' bch to ' + receiveAddress);
 
 		// retrieve the corresponding cash address for each SLP address
@@ -204,7 +207,7 @@ async function releaseCollateral(debtObHolders, distributionRate, debtObAddrCoun
 
     // Broadcast transation to the network
     const txidStr = await bitbox.RawTransactions.sendRawTransaction([hex])
-    console.log(`Transaction ID: ${txidStr}`)
+    console.log(`\nCreditor repayments successfully broadcasted to network\nTransaction ID: ${txidStr}`)
          
   } catch (err) {
     console.log(`error: `, err)
