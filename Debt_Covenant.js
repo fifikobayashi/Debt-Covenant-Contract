@@ -1,11 +1,11 @@
 // ============== Covenant Parameters ====================
-const DEBTID 				= "959632fd0e674a4158d17167b0963f586ec19ffcea204e030d1c1f6541c3348f";
+const DEBTID 			= "959632fd0e674a4158d17167b0963f586ec19ffcea204e030d1c1f6541c3348f";
 const bchCollateralAddress 	= 'bchtest:qp4wds5xz0vlpga28u90cn8mnrhw2w8ljgh2q8asxr'; // address holding the BCH as collateral
-const decodeTx 				= 'OP_RETURN 653 6a028d024039353936333266643065363734613431353864313731363762303936336635383665633139666663656132303465303330643163316636353431633333343866';
-const smartContractMnemonic = 'INSERT CONTRACT MNEMONIC'; // the contract holding the BCH collateral
+const decodeTx 			= 'OP_RETURN 653 6a028d024039353936333266643065363734613431353864313731363762303936336635383665633139666663656132303465303330643163316636353431633333343866';
+const smartContractMnemonic 	= 'INSERT CONTRACT MNEMONIC'; // the contract holding the BCH collateral
 var totalBCHCollateral 		= 100; // total BCH as collateral for the loan
 const bchUSDThreashold 		= 63; // if BCH USD price falls below this then it constitutes a breach of debt covenant
-const network 				= 'testnet';
+const network 			= 'testnet';
 
 // Initialise BITBOX based on chosen network
 const { BITBOX } = require('bitbox-sdk');
