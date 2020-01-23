@@ -29,7 +29,7 @@ node Debt_Covenant.js
 
 
 
-![Sample covenant audit output](https://raw.githubusercontent.com/fifikobayashi/SLP-Dividend-Contract/master/Screenshots/SLP%20Dividend%20v0.1%20-%202020-01-22.PNG)
+![Sample covenant audit output](https://raw.githubusercontent.com/fifikobayashi/Debt-Covenant-Contract/master/debt%20covenant%20output.PNG)
 
 Tx ID:
 https://explorer.bitcoin.com/tbch/tx/0f1fd71186cb60a1270555c25a7bb243989e460323a5dc13ccec932562938435
