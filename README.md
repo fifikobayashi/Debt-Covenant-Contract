@@ -1,15 +1,15 @@
-# Debt-Covenant-Contract
+# Debt-Covenant-Contract (SLP, CashScript, Bitbox)
 ![Succession](https://raw.githubusercontent.com/fifikobayashi/Debt-Covenant-Contract/master/img/succession-600x200.jpg)
 
 ***Use Case***
 
-In the TV Show 'Succession', the media and entertainment conglomerate Waystar Royco had a $2bn loan secured against the company's stock price. If their stock fell below $130USD per share they were effectively in breach of their debt covenant and their creditors were then able to legally pursue the repayment of the loan in full.
+In the TV Show 'Succession', the media and entertainment conglomerate Waystar Royco had a $2bn loan secured against the company's stock price. If their stock fell below $130USD a share they were effectively in breach of their debt covenant and their creditors were then able to legally pursue the repayment of the loan in full.
 
-In this context of this example code, the loan is secured against a BCH holding as collateral. The debt is tokenised via SLP tokens and held by one or more creditors (SLP token holders). If the BCH USD price fell below the agreed floor price then creditors can trustlessly initiate the repayment process without the need for an intermediary.
+In the context of this example contract, the loan is secured against a BCH holding as collateral. The debt is tokenised via SLP tokens and held by one or more creditors (SLP token holders). If the BCH USD price fell below the agreed floor price then creditors can trustlessly initiate the repayment process without the need for an intermediary nor actions from the debtor.
 
 
 ***Contract Features***
-1. Calls a CashScript contract to validate the Debt ID used against the official ID onchain
+1. Calls a CashScript contract to validate the Debt ID used in the contract against the official ID stored onchain
 2. Uses Bitbox to retrieve and validate whether the BCH USD price has breached the convenant's floor price
 3. If 1 and 2 are true, it proceeds to loop through creditors holding the loan's tokenised debt (SLP token holders)
 4. It calculates repayment dividends based on token balances (i.e. share) 
@@ -17,15 +17,15 @@ In this context of this example code, the loan is secured against a BCH holding 
 
 ***Future enhancements***
 1. Will aim to move as much of the covenant logic into the CashScript contract where possible to ensure the calculations are
- performed on the network rather than client side.
-2. Development a web front end once CashScript browser support is available.
+ performed on the network rather than client side. Will need CashScript to have arrays and limited looping functionalities at a minimum.
+2. Develop a simple web front end for reditors to initiate a covenant audit, once CashScript browser support is available.
 
 ***Getting Started***
 1. [Install Bitbox SDK](https://developer.bitcoin.com/bitbox/docs/getting-started)
 2. [Install SLP SDK](https://github.com/Bitcoin-com/slp-sdk)
 3. [Install Cashscript SDK 0.3.1 or above](https://developer.bitcoin.com/cashscript/docs/getting-started)
 4. [Install Memopress](https://developer.bitcoin.com/tutorials/memopress/)
-5. Fund a BCH collateral cashaddress and set the initialisation parameters in Debt_Covenant.js
+5. Fund a BCH collateral cashaddress and set the debt covenant parameters in Debt_Covenant.js
 6. Clone the repo and run the client logic in Debt_Covenant.js
 ~~~
 git clone https://github.com/fifikobayashi/Debt-Covenant-Contract
