@@ -1,10 +1,11 @@
 # Debt-Covenant-Contract
+![Succession](https://raw.githubusercontent.com/fifikobayashi/Debt-Covenant-Contract/master/img/succession-600x200.jpg)
 
 ***Use Case***
 
 In the TV Show 'Succession', the media and entertainment conglomerate Waystar Royco had a $2bn loan secured against the company's stock price. If their stock fell below $130USD per share they were effectively in breach of their debt covenant and their creditors were then able to legally pursue the repayment of the loan in full.
 
-In this context of this example the loan is secured against a BCH holding as collateral. The debt is tokenised via SLP tokens and held by one or more creditors (SLP token holders). If the BCH USD price fell below the agreed floor price then creditors can trustlessly initiate the repayment process without the need for an intermediary.
+In this context of this example code, the loan is secured against a BCH holding as collateral. The debt is tokenised via SLP tokens and held by one or more creditors (SLP token holders). If the BCH USD price fell below the agreed floor price then creditors can trustlessly initiate the repayment process without the need for an intermediary.
 
 
 ***Contract Features***
@@ -29,7 +30,7 @@ node Debt_Covenant.js
 
 
 
-![Sample covenant audit output](https://raw.githubusercontent.com/fifikobayashi/Debt-Covenant-Contract/master/debt%20covenant%20output.PNG)
+![Sample covenant audit output](https://raw.githubusercontent.com/fifikobayashi/Debt-Covenant-Contract/master/img/debt%20covenant%20output.PNG)
 
 Tx ID:
 https://explorer.bitcoin.com/tbch/tx/0f1fd71186cb60a1270555c25a7bb243989e460323a5dc13ccec932562938435
