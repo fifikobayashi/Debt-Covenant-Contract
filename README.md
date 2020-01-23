@@ -15,6 +15,11 @@ In this context of this example code, the loan is secured against a BCH holding 
 4. It calculates repayment dividends based on token balances (i.e. share) 
 5. It releases the BCH collateral by building a multi-output transaction and broadcasts to network 
 
+***Future enhancements***
+1. Will aim to move as much of the covenant logic into the CashScript contract where possible to ensure the calculations are
+ performed on the network rather than client side.
+2. Development a web front end once CashScript browser support is available.
+
 ***Getting Started***
 1. [Install Bitbox SDK](https://developer.bitcoin.com/bitbox/docs/getting-started)
 2. [Install SLP SDK](https://github.com/Bitcoin-com/slp-sdk)
