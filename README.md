@@ -4,7 +4,7 @@
 
 In the TV Show 'Succession', the media and entertainment conglomerate Waystar Royco had a $2bn loan secured against the company's stock price. If their stock fell below $130USD per share they were effectively in breach of their debt covenant and their creditors were then able to legally pursue the repayment of the loan in full.
 
-In this context the loan (can be physical or digital) is secured against a BCH holding as collateral. The debt is tokenised via SLP tokens and held by one or more creditors (SLP token holders). If the BCH USD price fell below the agreed floor price then creditors can trustlessly initiate the repayment process without the need for an intermediary.
+In this context of this example the loan is secured against a BCH holding as collateral. The debt is tokenised via SLP tokens and held by one or more creditors (SLP token holders). If the BCH USD price fell below the agreed floor price then creditors can trustlessly initiate the repayment process without the need for an intermediary.
 
 
 ***Contract Features***
