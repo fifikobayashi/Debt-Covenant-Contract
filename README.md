@@ -16,7 +16,7 @@ In the context of this example contract, the loan is secured against a BCH holdi
 5. It releases the BCH collateral by building a multi-output transaction and broadcasts to network 
 
 ***Future enhancements***
-1. Will aim to move as much of the covenant logic into the CashScript contract where possible to ensure the calculations are
+1. The CashScript contract is very minimalistic for now - will aim to move as much of the covenant logic into the CashScript contract where possible to ensure the calculations are
  performed on the network rather than client side. Will need CashScript to have arrays and limited looping functionalities at a minimum.
 2. Develop a simple web front end for reditors to initiate a covenant audit, once CashScript browser support is available.
 
