@@ -15,7 +15,7 @@ In the context of this example contract, the loan is secured against a BCH holdi
 4. It calculates repayment dividends based on token balances (i.e. share) 
 5. It releases the BCH collateral by building a multi-output transaction and broadcasts to network 
 
-![Process and Protocol Overview](https://raw.githubusercontent.com/fifikobayashi/Debt-Covenant-Contract/master/img/overview.png)
+![Process and Protocol Overview](https://raw.githubusercontent.com/fifikobayashi/Debt-Covenant-Contract/master/img/overview-1.png)
 
 ***Future enhancements***
 1. The CashScript contract is very minimalistic for now - will aim to move as much of the covenant logic into the CashScript contract where possible to ensure the calculations are
