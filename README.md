@@ -18,7 +18,8 @@ In the context of this example contract, the loan is secured against a BCH holdi
 ***Future enhancements***
 1. The CashScript contract is very minimalistic for now - will aim to move as much of the covenant logic into the CashScript contract where possible to ensure the calculations are
  performed on the network rather than client side. Will need CashScript to have arrays and limited looping functionalities at a minimum.
-2. Develop a simple web front end for creditors to initiate a covenant audit, once CashScript browser support is available.
+2. Needs Mitra protocol upgrades (2-3 rounds away) for the repayments to be truely trustless. 
+3. Develop a simple web front end for creditors to initiate a covenant audit, once CashScript browser support is available.
 
 ***Getting Started***
 1. [Install Bitbox SDK](https://developer.bitcoin.com/bitbox/docs/getting-started)
