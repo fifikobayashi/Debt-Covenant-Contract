@@ -30,7 +30,7 @@ In the context of this example contract, the loan is secured against a BCH holdi
 4. [Install Memopress](https://developer.bitcoin.com/tutorials/memopress/)
 5. Create a few new addresses to represent creditors and send them shares of a SLP debt token (ideally with a circulating supply of 100)
 6. Fund a BCH collateral cashaddress and set the debt covenant parameters in Debt_Covenant.js
-7. Clone the repo and run the client logic in Debt_Covenant.js
+7. Clone the repo and run the client logic in Debt_Covenant.js (you can perform contract registration steps manually as its easier for now)
 ~~~
 git clone https://github.com/fifikobayashi/Debt-Covenant-Contract
 cd Debt-Covenant-Contract
