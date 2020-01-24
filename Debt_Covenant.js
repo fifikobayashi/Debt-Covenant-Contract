@@ -33,7 +33,7 @@ const P2PKH = Contract.compile(path.join(__dirname, 'Debt_Covenant.cash'), netwo
 const instance = P2PKH.new(collateralFundPkh); // Instantiate a new P2PKH contract with constructor arguments: { pkh: collateralFundPkh }
 
 /*
- * Checks whether the Debt Covenant has been breached based on current price
+  Checks whether the Debt Covenant has been breached based on current price
  */
 checkDebtCovenant();
 async function checkDebtCovenant() {
@@ -77,7 +77,7 @@ async function checkDebtCovenant() {
 
 
 /*
- * Calls on the CashScript contract to validate the debt obligation ID being used 
+  Calls on the CashScript contract to validate the debt obligation ID being used 
  */
 async function validateTokenId(localId, onchainId) {
 
@@ -101,7 +101,7 @@ async function validateTokenId(localId, onchainId) {
 }
 
 /*
- * Checks the current BCH USD price via Bitbox
+  Checks the current BCH USD price via Bitbox
  */
 async function validateBchPrice() {
 	try {
@@ -122,8 +122,8 @@ async function validateBchPrice() {
 }
 
 /*
- * Distribution of the BCH from the collateralFund address to 
- *  holders of the debt obligation token 
+  Distribution of the BCH from the collateralFund address to 
+  holders of the debt obligation token 
  */
 async function releaseCollateral(debtObHolders, distributionRate, debtObAddrCount) {
 
@@ -217,7 +217,7 @@ async function releaseCollateral(debtObHolders, distributionRate, debtObAddrCoun
 // *** Helpder functions imported from Bitbox SDK below ***
 
 /*
- * Generate a change address from a Mnemonic of a private key.
+  Generate a change address from a Mnemonic of a private key.
  */
 function changeAddrFromMnemonic(mnemonic, network) {
   const rootSeed = bitbox.Mnemonic.toSeed(mnemonic)
@@ -230,7 +230,7 @@ function changeAddrFromMnemonic(mnemonic, network) {
 }
 
 /*
- * Get the balance in BCH of a BCH address.
+  Get the balance in BCH of a BCH address.
  */
 async function getBCHBalance(addr, verbose) {
   try {
@@ -247,7 +247,7 @@ async function getBCHBalance(addr, verbose) {
 }
 
 /*
- * Returns the utxo with the biggest balance from an array of utxos.
+  Returns the utxo with the biggest balance from an array of utxos.
  */
 function findBiggestUtxo(utxos) {
   let largestAmount = 0
