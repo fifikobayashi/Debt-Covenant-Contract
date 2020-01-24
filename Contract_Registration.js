@@ -1,13 +1,13 @@
 // Debt token creation parameters
 const fundingAddress 			= '...' // SLP address funding the token creation
-const FUNDMNEMONIC 				= '...'; // mnemonic of he address funding the token creation
-const fundingWif 				= '...' // WIF of the address funding token creation in compressed WIF format
+const FUNDMNEMONIC 			= '...'; // mnemonic of he address funding the token creation
+const fundingWif 			= '...' // WIF of the address funding token creation in compressed WIF format
 const tokenReceiverAddress 		= '...' // SLP address
 const batonReceiverAddress 		= '...' // SLP address
-const bchChangeReceiverAddress 	= '...' // CASH address
-const TOKENNAME 				= '...'; // e.g. 'DebtToken'
-const SYMBOL 					= '...'; // e.g. DET
-const QUANTITY 					= 100; // initial supply
+const bchChangeReceiverAddress 		= '...' // CASH address
+const TOKENNAME 			= '...'; // e.g. 'DebtToken'
+const SYMBOL 				= '...'; // e.g. DET
+const QUANTITY 				= 100; // initial supply
       
 // Registration parameters
 const DebtID = '959632fd0e674a4158d17167b0963f586ec19ffcea204e030d1c1f6541c3348f'; //debt token ID from createToken()
