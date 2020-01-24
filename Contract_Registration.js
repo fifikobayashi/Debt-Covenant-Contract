@@ -31,11 +31,11 @@ else SLP = new SLPSDK({ restURL: `https://trest.bitcoin.com/v2/` })
 registration();
 async function registration() {
 
-	createToken();
+	await createToken();
 	
-	registerContract();
+	await registerContract();
 	
-	establishCollateral();
+	await establishCollateral();
 		
 }
 
