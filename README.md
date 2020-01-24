@@ -26,9 +26,9 @@ In the context of this example contract, the loan is secured against a BCH holdi
 2. [Install SLP SDK](https://github.com/Bitcoin-com/slp-sdk)
 3. [Install Cashscript SDK 0.3.1 or above](https://developer.bitcoin.com/cashscript/docs/getting-started)
 4. [Install Memopress](https://developer.bitcoin.com/tutorials/memopress/)
-5. Fund a BCH collateral cashaddress and set the debt covenant parameters in Debt_Covenant.js
-6. Create a few new addresses to represent creditors and send them shares of a token (ideally with a circulating supply of 100)
-6. Clone the repo and run the client logic in Debt_Covenant.js
+5. Create a few new addresses to represent creditors and send them shares of a SLP debt token (ideally with a circulating supply of 100)
+6. Fund a BCH collateral cashaddress and set the debt covenant parameters in Debt_Covenant.js
+7. Clone the repo and run the client logic in Debt_Covenant.js
 ~~~
 git clone https://github.com/fifikobayashi/Debt-Covenant-Contract
 cd Debt-Covenant-Contract
